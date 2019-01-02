@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <body>
 
-<div id="menu">
- <h1>Hold em</h1>
+	<div id="menu">
+		<h1>Hold em</h1>
 
- Nickname: <input id="nickname" type="text" name="nickname"><br> 
+		Nickname: <input id="nickname" type="text" name="nickname"><br>
 
- <button id="createLobby" type="button">Create Lobby</button>
- <br>
- <br>
- <br>
-
-
-
- Nickname: <input id="nicknameJoin" type="text" name="nicknamejoin"> <br> 
- Lobby Code: <input id="lobbyCode" type="text" name="lobbycode"> <br>
- <button id="enterLobby" type="button">Enter Lobby</button> <br><br>
+		<button id="createLobby" type="button">Create Lobby</button>
+		<br>
+		<br>
+		<br>
 
 
-</div>
 
-<div id="lobby" style="display:none">
- <h1 id="userMessage"></h1>
- <ul>
-   <li id="p1">...</li>
-   <li id="p2">...</li>
-   <li id="p3">...</li>
-   <li id="p4">...</li>
-   <li id="p5">...</li>
-   <li id="p6">...</li>
-   <li id="p7">...</li>
-   <li id="p8">...</li>
- </ul>
+		Nickname: <input id="nicknameJoin" type="text" name="nicknamejoin"> <br>
+		Lobby Code: <input id="lobbyCode" type="text" name="lobbycode"> <br>
+		<button id="enterLobby" type="button">Enter Lobby</button> <br><br>
 
- <button id="readyButton" type="button">Ready</button> 
 
-</div>
+	</div>
 
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="classes.js"></script>
-<script src="app.js"></script>
+	<div id="lobby" style="display:none">
+		<h1 id="userMessage"></h1>
+		<ul>
+			<li id="p1">...</li>
+			<li id="p2">...</li>
+			<li id="p3">...</li>
+			<li id="p4">...</li>
+			<li id="p5">...</li>
+			<li id="p6">...</li>
+			<li id="p7">...</li>
+			<li id="p8">...</li>
+		</ul>
+
+		<button id="readyButton" type="button">Ready</button>
+
+	</div>
+
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="classes.js"></script>
+	<script src="app.js"></script>
 </body>
+
 </html>
