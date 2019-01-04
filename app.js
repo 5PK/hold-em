@@ -5,11 +5,12 @@
 
 (function init() {
 
-	var playerArr;
-	let player;
+	//var playerArr;
+	//let player;
 	//let game;
 	let lobby;
-
+	
+	
 
 	var socket = io.connect('http://localhost:5000');
 
@@ -27,14 +28,14 @@
 		socket.emit('createLobby', {
 			name: name
 		});
-		player = new Player(name);
+//		player = new Player(name);
 	});
 
 	/** 
 	 *  Join an existing lobby on the entered roomId. Emit the joinLobby event.
 	 */
 	$('#enterLobby').on('click', function() {
-		console.log("enterLobby click");
+		console.log('enterLobby click');
 		var nameJoin = $('#nicknameJoin').val();
 		var lobbyId = $('#lobbyCode').val();
 
@@ -50,7 +51,16 @@
 			name: nameJoin,
 			room: lobbyId
 		});
-		player = new Player(nameJoin);
+//		player = new Player(nameJoin);
+	});
+
+	/**
+	 *  Player is ready, Change the ready state, and update the other players in the lobby 
+	 */
+	$('#ready').on('click', function(){
+		console.log('ready click');
+		
+		socket.emit('playerReady', {room: lobby.getRoomId()});
 	});
 
 	/** 
@@ -63,9 +73,10 @@
 		lobby = new Lobby(data.room);
 		lobby.displayLobby(message);
 		$('#p1').text(data.name);
-		console.log("room: " + data.room);
+		$('#r1').text(data.ready);
+		console.log('room: ' + data.room);
 		console.log(data.name);
-		console.log("display lobby");
+		console.log('display lobby');
 
 	});
 
@@ -86,7 +97,8 @@
 		for (var i = 0; i < clientList.length; i++) {
 			console.log(clientList[i]);
 
-			$('#p' + (i + 1)).text(clientList[i]);
+			$('#p' + (i + 1)).text(clientList[i].name);
+			$('#r' + (i + 1)).text(clientList[i].ready);
 		}
 	});
 

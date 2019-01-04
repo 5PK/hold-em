@@ -42,4 +42,8 @@
       $('#userMessage').html(message);
       //this.createGameBoard();
     }
+    
+    getRoomId() {
+      return this.roomId;
+    }
   }
