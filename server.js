@@ -10,7 +10,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-//var rooms = 0;
+var rooms = 0;
 
 
 app.use(express.static('.'));
@@ -27,67 +27,37 @@ io.on('connection', function(socket){
 	socket.on('createLobby', function(data){
 	  var lobbyCode = getLobbyCode();
 	  socket.join(lobbyCode);
-	  socket._name = data.name;
-	  socket._ready = 0;
-	  
-	  socket.emit('newLobby', {name: data.name, room: lobbyCode, ready: 0});
+	  socket.emit('newLobby', {name: data.name, room: lobbyCode });
+	  socket.nickname = data.name;
 	});
 
 	/**
 	 * Connect the Player 2 to the room he requested. Show error if room full.
 	 */
 	socket.on('joinLobby', function(data){
-	  console.log('joinlobby emit');
+	  console.log("joinlobby emit");
 	  console.log(data.room);
    		
 	  var room = io.nsps['/'].adapter.rooms[data.room];
 	  if( room && room.length < 8){
-	    console.log('join Lobby');
+	    console.log("join Lobby");
 	    console.log(data.room);
 	    socket.join(data.room);
-	    socket._name = data.name;
-	    socket._ready = 0;
+	    socket.nickname = data.name;
 
-	    var nameArr = [];
-  	    for (var socketID in io.nsps['/'].adapter.rooms[data.room].sockets) {
-   		const name = io.nsps['/'].connected[socketID]._name;
-   		const ready = io.nsps['/'].connected[socketID]._ready; 
-		
-		var player = {name : name, ready: ready}; 
-		nameArr.push(player);
+	    var nicknameArr = [];
 
+  	    for (socketID in io.nsps['/'].adapter.rooms[data.room].sockets) {
+   		const nickname = io.nsps['/'].connected[socketID].nickname;
+   		// do stuff with nickname
+		nicknameArr.push(nickname);
  	    }		  
 	    socket.emit('displayLobby', {name: data.name, room: data.room});
-	    io.in(data.room).emit('updateLobbyList', {roster: nameArr});
+	    io.in(data.room).emit('updateLobbyList', {roster: nicknameArr});
 	  }
 	  else {
 	    socket.emit('err', {message: 'Sorry, The room is null!'});
 	  }
-	});
-
-	/**
-	 * Handle Player Ready/Unready 
-	 */
-
-	socket.on('playerReady', function(data){
-		if (socket._ready == 0){
-			console.log('ready');
-			socket._ready = 1;
-		}else if (socket._ready == 1){
-			console.log('not ready');
-			socket._ready = 0;
-		}
-		var nameArr = [];
-  	    	for (var socketID in io.nsps['/'].adapter.rooms[data.room].sockets) {
-   			const name = io.nsps['/'].connected[socketID]._name;
-   			const ready = io.nsps['/'].connected[socketID]._ready; 
-		
-			var player = {name : name, ready: ready}; 
-			nameArr.push(player);
-
- 	    	}		  
-	    io.in(data.room).emit('updateLobbyList', {roster: nameArr});
-	
 	});
 
 	/**
@@ -112,8 +82,8 @@ io.on('connection', function(socket){
 function getLobbyCode(){
  
  var code;
- var charArr = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
- var numArr = ['1','2','3','4','5','6','7','8','9','0'];
+ var charArr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+ var numArr = ["1","2","3","4","5","6","7","8","9","0"];
  code = charArr[Math.floor(Math.random()*charArr.length)] 
 	+ charArr[Math.floor(Math.random()*charArr.length)] 
 	+ charArr[Math.floor(Math.random()*charArr.length)] 
