@@ -6,9 +6,11 @@
 
 
 var express = require('express');
+var functions =  require('./functions');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
 
 //var rooms = 0;
 
@@ -109,18 +111,11 @@ io.on('connection', function(socket){
 
 });
 
+/**
+Generates a 5 char random string.
+*/
 function getLobbyCode(){
- 
- var code;
- var charArr = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
- var numArr = ['1','2','3','4','5','6','7','8','9','0'];
- code = charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ numArr[Math.floor(Math.random()*numArr.length)];
-
- return code;
+return functions.getLobbyCode();
 }
 
 
