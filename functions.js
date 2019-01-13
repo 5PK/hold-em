@@ -1,16 +1,12 @@
-function getLobbyCode(){
- 
- var code;
- var charArr = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
- var numArr = ["1","2","3","4","5","6","7","8","9","0"];
- code = charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ charArr[Math.floor(Math.random()*charArr.length)] 
-	+ numArr[Math.floor(Math.random()*numArr.length)];
-
- return code;
-}
-
- 
-
+module.exports = 
+{
+getLobbyCode: function() {
+var char;
+var code = "";
+for (var i = 0 ; i<5 ; i++) {
+let char = Math.random().toString(36).substring(2, 3).toUpperCase();
+code += char;}
+// check if lobby cody is not a duplicate. ToDO lobby ids enum
+// return (code != unique(code)) ? getLobbyCode(): code;
+return code;}
+};
