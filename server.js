@@ -158,7 +158,7 @@ function isLobbyCodeAssigned(var code) {
 
 // call this function with a lobbyCode to delete the lobbyCode from the lobbyArr
 // this could be useful when a group of players end a game and everyone quits the lobby.
-function deleteLobby(String code) {
+function deleteLobby(var code) {
 
 	var indexOfCode = lobbyArr.indexOf(code);
 	lobbyArr.splice(indexOfCode, 1);
