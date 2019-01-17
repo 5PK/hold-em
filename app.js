@@ -9,8 +9,8 @@
 	//let player;
 	//let game;
 	let lobby;
-	
-	
+
+
 
 	var socket = io.connect('http://localhost:5000');
 
@@ -28,7 +28,7 @@
 		socket.emit('createLobby', {
 			name: name
 		});
-//		player = new Player(name);
+		//		player = new Player(name);
 	});
 
 	/** 
@@ -51,23 +51,25 @@
 			name: nameJoin,
 			room: lobbyId
 		});
-//		player = new Player(nameJoin);
+		//		player = new Player(nameJoin);
 	});
 
 	/**
 	 *  Player is ready, Change the ready state, and update the other players in the lobby 
 	 */
-	$('#ready').on('click', function(){
+	$('#ready').on('click', function() {
 		console.log('ready click');
-		
-		socket.emit('playerReady', {room: lobby.getRoomId()});
+
+		socket.emit('playerReady', {
+			room: lobby.getRoomId()
+		});
 	});
 
 	/** 
 	 * New Lobby created by current client. Update the UI and create new Lobby.
 	 */
 	socket.on('newLobby', (data) => {
-		const message =	`Hello, ${data.name}. Please ask your friends to enter Game ID: ${data.room}. Waiting for players...`;
+		const message = `Hello, ${data.name}. Please ask your friends to enter Game ID: ${data.room}. Waiting for players...`;
 
 		//create lobby
 		lobby = new Lobby(data.room);
