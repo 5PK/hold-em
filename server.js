@@ -134,7 +134,7 @@ else {
 return generatedLobbyCode;
 }
 
-function isLobbyCodeAssigned(String code) {
+function isLobbyCodeAssigned(var code) {
 console.log(lobbyArr.toString());
 return lobbyArr.includes(code);
 }
