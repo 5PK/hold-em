@@ -111,13 +111,41 @@ io.on('connection', function(socket){
 
 });
 
+// array of lobby codes
+var lobbyArr = ["TEST1", "TEST2"];
+
+
 /**
 Generates a 5 char random string.
 */
 function getLobbyCode(){
-return functions.getLobbyCode();
+
+var generatedLobbyCode = functions.getLobbyCode();
+
+if (!isLobbyCodeAssigned(generatedLobbyCode)) {
+	console.log("Lobby code '%s' is unique", generatedLobbyCode);
+	lobbyArr.push(generatedLobbyCode);
+}
+else {
+	console.log("Lobby code '%s' is already assigned", generatedLobbyCode);
+	console.log("Regenerating Lobby code");
+	getLobbyCode();
+}
+return generatedLobbyCode;
 }
 
+function isLobbyCodeAssigned(String code) {
+console.log(lobbyArr.toString());
+return lobbyArr.includes(code);
+}
+
+// call this function with a lobbyCode to delete the lobbyCode from the lobbyArr
+// this could be useful when a group of players end a game and everyone quits the lobby.
+function deleteLobby(String code) {
+
+var indexOfCode = lobbyArr.indexOf(code);
+lobbyArr.splice(indexOfCode, 1);
+}
 
 
 server.listen(5000);
